@@ -1,5 +1,5 @@
 {
-  "name": "human-contexts-firebase",
+  "name": "@humancollective/human-contexts-firebase",
   "version": "0.0.1",
   "main": "dist/index.js",
   "source": "src/index.ts",
