@@ -1,12 +1,9 @@
 import React from 'react'
-import firebase from 'firebase/app'
+import firebaseClient from 'firebase/app'
 import 'firebase/auth'
-import 'firebase/firestore'
-
-export const initializeFirebase = firebase.initializeApp
 
 export interface FirebaseContextValue {
-  firebase?: typeof firebase
+  firebase?: typeof firebaseClient
   firebaseUser?: firebase.User | null
   isLoggedIn?: boolean
   isPointOfSales?: boolean
@@ -16,18 +13,17 @@ const defaults: FirebaseContextValue = {}
 
 export const FirebaseContext = React.createContext(defaults)
 
-interface FirebaseContextProviderProps {
-  config: any
+export interface FirebaseContextProps {
+  firebase: typeof firebaseClient
 }
 
-export const FirebaseContextProvider: React.FunctionComponent<FirebaseContextProviderProps> = ({
-  config,
+export const FirebaseContextProvider: React.FunctionComponent<FirebaseContextProps> = ({
+  firebase,
   children,
 }) => {
   const [value, setValue] = React.useState(defaults)
 
   React.useEffect(() => {
-    firebase.initializeApp(config)
     firebase.auth().onAuthStateChanged(handleAuth)
   }, [])
 

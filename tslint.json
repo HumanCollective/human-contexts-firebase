@@ -12,7 +12,7 @@
     "ordered-imports": [false],
     "no-console": [false],
     "no-var-requires": true,
-    "quotemark": [true, "double", "jsx-double"],
+    "quotemark": [true, "single", "jsx-double"],
     "object-literal-sort-keys": false,
     "variable-name": false,
     "no-empty": false,

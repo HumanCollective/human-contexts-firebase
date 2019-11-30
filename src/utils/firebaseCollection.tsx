@@ -1,18 +1,17 @@
 import React from 'react'
-import firebaseClient from 'firebase/app'
+import firebaseApp from 'firebase/app'
+import 'firebase/firestore'
 
 import { FirebaseContext } from '../contexts'
 
-type FirebaseClient = typeof firebaseClient
+type FirebaseApp = typeof firebaseApp
 
 export const firebaseCollection = <T extends unknown>({
   defaultValue = [],
   queryRef,
 }: {
   defaultValue?: T[]
-  queryRef: (
-    firebaseClient: FirebaseClient,
-  ) => firebase.firestore.CollectionReference
+  queryRef: (firebaseApp: FirebaseApp) => firebase.firestore.CollectionReference
 }) => {
   const Context = React.createContext(defaultValue as T[])
   const Provider: React.FunctionComponent = ({ children }) => {

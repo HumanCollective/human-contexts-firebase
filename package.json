@@ -1,18 +1,28 @@
 {
   "name": "@humancollective/human-contexts-firebase",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "main": "dist/index.js",
+  "umd:main": "dist/index.umd.js",
+  "module": "dist/index.m.js",
   "source": "src/index.ts",
+  "types": "dist/index.d.ts",
   "license": "MIT",
   "devDependencies": {
-    "microbundle": "^0.11.0"
+    "@types/react": "^16.9.13",
+    "firebase": "^7.5.0",
+    "microbundle": "^0.11.0",
+    "react": "^16.12.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-react": "^4.1.0"
   },
   "scripts": {
-    "build": "microbundle",
-    "dev": "microbundle watch"
+    "build": "microbundle --jsx react",
+    "dev": "microbundle watch --jsx react"
   },
   "peerDependencies": {
     "firebase": "^7.5.0",
     "react": "^16.12.0"
-  }
+  },
+  "dependencies": {}
 }

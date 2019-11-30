@@ -1,5 +1,6 @@
 import React from 'react'
 import firebaseClient from 'firebase/app'
+import 'firebase/firestore'
 
 import { FirebaseContext } from '../contexts'
 
