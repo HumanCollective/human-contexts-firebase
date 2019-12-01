@@ -17,7 +17,7 @@ interface FirebaseContextProps {
 
 export const FirebaseContext = React.createContext(defaults)
 
-export const FirebaseContextProvider: React.FunctionComponent<FirebaseContextProps> = ({
+export const FirebaseProvider: React.FunctionComponent<FirebaseContextProps> = ({
   firebase,
   children,
 }) => {
