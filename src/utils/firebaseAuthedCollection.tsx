@@ -13,6 +13,7 @@ interface FirebaseAuthedCollectionProviderProps<T = any> {
   ) => firebase.firestore.CollectionReference
   children: React.ReactNode
   Provider: React.Provider<T[]>
+  includeIds?: boolean
 }
 
 const FirebaseAuthedCollectionProvider = <T extends unknown>({
@@ -20,6 +21,7 @@ const FirebaseAuthedCollectionProvider = <T extends unknown>({
   getQueryRef,
   children,
   Provider,
+  includeIds,
 }: FirebaseAuthedCollectionProviderProps<T>) => {
   const [value, setValue] = React.useState(defaultValue)
   const [listener, setListener] = React.useState({ unsubscribe: () => {} })
@@ -41,7 +43,10 @@ const FirebaseAuthedCollectionProvider = <T extends unknown>({
     const allDocs = querySnap.docs
     const nextValue: T[] = []
     for (const doc of allDocs) {
-      nextValue.push(doc.data() as T)
+      nextValue.push(({
+        ...(includeIds && { id: doc.id }),
+        ...doc.data(),
+      } as unknown) as T)
     }
     setValue(nextValue)
   }
@@ -52,11 +57,13 @@ const FirebaseAuthedCollectionProvider = <T extends unknown>({
 export const firebaseAuthedCollection = <T extends unknown>({
   defaultValue = [],
   getQueryRef,
+  includeIds,
 }: {
   defaultValue?: T[]
   getQueryRef: (
     firebaseClient: FirebaseClient,
   ) => firebase.firestore.CollectionReference
+  includeIds?: boolean
 }) => {
   const Context: React.Context<T[]> = React.createContext(defaultValue)
 
@@ -65,6 +72,7 @@ export const firebaseAuthedCollection = <T extends unknown>({
       Provider={Context.Provider}
       defaultValue={defaultValue}
       getQueryRef={getQueryRef}
+      includeIds={includeIds}
     >
       {children}
     </FirebaseAuthedCollectionProvider>
