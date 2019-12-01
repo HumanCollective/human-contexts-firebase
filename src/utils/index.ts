@@ -1,1 +1,1 @@
-export * from './firebaseAuthedCollection'
+export * from './authedCollection'

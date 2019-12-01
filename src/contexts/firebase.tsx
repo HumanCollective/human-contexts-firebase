@@ -2,7 +2,7 @@ import React from 'react'
 import firebaseClient from 'firebase/app'
 import 'firebase/auth'
 
-export interface FirebaseContextValue {
+interface FirebaseContextValue {
   firebase?: typeof firebaseClient
   firebaseUser?: firebase.User | null
   isLoggedIn?: boolean
@@ -11,11 +11,11 @@ export interface FirebaseContextValue {
 
 const defaults: FirebaseContextValue = {}
 
-export const FirebaseContext = React.createContext(defaults)
-
-export interface FirebaseContextProps {
+interface FirebaseContextProps {
   firebase: typeof firebaseClient
 }
+
+export const FirebaseContext = React.createContext(defaults)
 
 export const FirebaseContextProvider: React.FunctionComponent<FirebaseContextProps> = ({
   firebase,

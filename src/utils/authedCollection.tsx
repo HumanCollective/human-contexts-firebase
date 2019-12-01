@@ -6,7 +6,7 @@ import { FirebaseContext } from '../contexts'
 
 type FirebaseClient = typeof firebaseClient
 
-interface FirebaseAuthedCollectionProviderProps<T = any> {
+interface AuthedCollectionProviderProps<T = any> {
   defaultValue: T[]
   getQueryRef: (
     firebaseClient: FirebaseClient,
@@ -16,13 +16,13 @@ interface FirebaseAuthedCollectionProviderProps<T = any> {
   includeIds?: boolean
 }
 
-const FirebaseAuthedCollectionProvider = <T extends unknown>({
+const AuthedCollectionProvider = <T extends unknown>({
   defaultValue,
   getQueryRef,
   children,
   Provider,
   includeIds,
-}: FirebaseAuthedCollectionProviderProps<T>) => {
+}: AuthedCollectionProviderProps<T>) => {
   const [value, setValue] = React.useState(defaultValue)
   const [listener, setListener] = React.useState({ unsubscribe: () => {} })
   const { firebase, firebaseUser } = React.useContext(FirebaseContext)
@@ -54,7 +54,7 @@ const FirebaseAuthedCollectionProvider = <T extends unknown>({
   return <Provider value={value}>{children}</Provider>
 }
 
-export const firebaseAuthedCollection = <T extends unknown>({
+export const authedCollection = <T extends unknown>({
   defaultValue = [],
   getQueryRef,
   includeIds,
@@ -68,15 +68,18 @@ export const firebaseAuthedCollection = <T extends unknown>({
   const Context: React.Context<T[]> = React.createContext(defaultValue)
 
   const Provider: React.FunctionComponent = ({ children }) => (
-    <FirebaseAuthedCollectionProvider<T>
+    <AuthedCollectionProvider<T>
       Provider={Context.Provider}
       defaultValue={defaultValue}
       getQueryRef={getQueryRef}
       includeIds={includeIds}
     >
       {children}
-    </FirebaseAuthedCollectionProvider>
+    </AuthedCollectionProvider>
   )
 
-  return [Context, Provider]
+  return [Context, Provider] as [
+    React.Context<T[]>,
+    React.FunctionComponent<{}>,
+  ]
 }
