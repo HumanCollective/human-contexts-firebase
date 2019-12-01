@@ -78,8 +78,5 @@ export const firebaseAuthedCollection = <T extends unknown>({
     </FirebaseAuthedCollectionProvider>
   )
 
-  return {
-    Context,
-    Provider,
-  }
+  return [Context, Provider]
 }
