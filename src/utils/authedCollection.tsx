@@ -10,6 +10,7 @@ interface AuthedCollectionProviderProps<T = any> {
   defaultValue: T[]
   getQueryRef: (
     firebaseClient: FirebaseClient,
+    firebaseUserId: string,
   ) => firebase.firestore.CollectionReference
   children: React.ReactNode
   Provider: React.Provider<T[]>
@@ -33,7 +34,7 @@ const AuthedCollectionProvider = <T extends unknown>({
     }
     listener.unsubscribe()
     if (firebaseUser) {
-      const off = getQueryRef(firebase).onSnapshot(onUpdate)
+      const off = getQueryRef(firebase, firebaseUser.uid).onSnapshot(onUpdate)
       setListener({ unsubscribe: off })
       return off
     }
@@ -62,6 +63,7 @@ export const authedCollection = <T extends unknown>({
   defaultValue?: T[]
   getQueryRef: (
     firebaseClient: FirebaseClient,
+    firebaseUserId: string,
   ) => firebase.firestore.CollectionReference
   includeIds?: boolean
 }) => {
