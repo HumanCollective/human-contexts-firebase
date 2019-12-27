@@ -15,6 +15,8 @@ interface AuthedCollectionProviderProps<T = any> {
   children: React.ReactNode
   Provider: React.Provider<T[]>
   includeIds?: boolean
+  transformValue?: (storedValue: any) => T
+  sortValues?: (values: T[]) => T[]
 }
 
 const AuthedCollectionProvider = <T extends unknown>({
@@ -23,6 +25,8 @@ const AuthedCollectionProvider = <T extends unknown>({
   children,
   Provider,
   includeIds,
+  transformValue = v => v,
+  sortValues = vs => vs,
 }: AuthedCollectionProviderProps<T>) => {
   const [value, setValue] = React.useState(defaultValue)
   const [listener, setListener] = React.useState({ unsubscribe: () => {} })
@@ -44,12 +48,15 @@ const AuthedCollectionProvider = <T extends unknown>({
     const allDocs = querySnap.docs
     const nextValue: T[] = []
     for (const doc of allDocs) {
-      nextValue.push(({
-        ...(includeIds && { id: doc.id }),
-        ...doc.data(),
-      } as unknown) as T)
+      nextValue.push(
+        transformValue({
+          ...(includeIds && { id: doc.id }),
+          ...doc.data(),
+        }),
+      )
     }
-    setValue(nextValue)
+    const sortedNextValue = sortValues(nextValue)
+    setValue(sortedNextValue)
   }
 
   return <Provider value={value}>{children}</Provider>
@@ -59,6 +66,8 @@ export const authedCollection = <T extends unknown>({
   defaultValue = [],
   getQueryRef,
   includeIds,
+  transformValue,
+  sortValues,
 }: {
   defaultValue?: T[]
   getQueryRef: (
@@ -66,6 +75,8 @@ export const authedCollection = <T extends unknown>({
     firebaseUserId: string,
   ) => firebase.firestore.CollectionReference
   includeIds?: boolean
+  transformValue?: (storedValue: any) => T
+  sortValues?: (values: T[]) => T[]
 }) => {
   const Context: React.Context<T[]> = React.createContext(defaultValue)
 
@@ -75,6 +86,8 @@ export const authedCollection = <T extends unknown>({
       defaultValue={defaultValue}
       getQueryRef={getQueryRef}
       includeIds={includeIds}
+      transformValue={transformValue}
+      sortValues={sortValues}
     >
       {children}
     </AuthedCollectionProvider>

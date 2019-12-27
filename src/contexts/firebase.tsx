@@ -13,17 +13,20 @@ const defaults: FirebaseContextValue = {}
 
 interface FirebaseContextProps {
   firebase: typeof firebaseClient
+  configuration: any
 }
 
 export const FirebaseContext = React.createContext(defaults)
 
 export const FirebaseProvider: React.FunctionComponent<FirebaseContextProps> = ({
   firebase,
+  configuration,
   children,
 }) => {
   const [value, setValue] = React.useState(defaults)
 
   React.useEffect(() => {
+    firebase.initializeApp(configuration)
     firebase.auth().onAuthStateChanged(handleAuth)
   }, [])
 

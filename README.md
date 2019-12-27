@@ -70,14 +70,25 @@ import React from 'react'
 import firebase from 'firebase/app'
 import { FirebaseProvider } from '@humancollective/human-contexts-firebase'
 
-firebase.initializeApp(YOUR_FIREBASE_CONFIG)
-
 const MyApplication = ({ children }) => (
-  <FirebaseProvider firebase={firebase}>{children}</FirebaseProvider>
+  <FirebaseProvider
+    firebase={firebase}
+    configuration={
+      {
+        // The credentials you use to access firebase
+        // apiKey: "YOUR_API_KEY",
+        // authDomain: "YOUR_AUTH_DOMAIN",
+        // databaseURL: "YOUR_DATABASE_URL",
+        // ...
+      }
+    }
+  >
+    {children}
+  </FirebaseProvider>
 )
 ```
 
-#\*# Creating a Context
+## Creating a Context
 
 To create an authenticated collection context, we import the `authedCollection` helper.
 
@@ -107,10 +118,8 @@ import { FirebaseProvider } from '@humancollective/human-contexts-firebase'
 // import the provider
 import { PostsProvider } from '../contexts/posts'
 
-firebase.initializeApp(YOUR_FIREBASE_CONFIG)
-
 const MyApplication = ({ children }) => (
-  <FirebaseProvider firebase={firebase}>
+  <FirebaseProvider firebase={firebase} configuration={YOUR_FIREBASE_CONFIG}>
     {/* ... and wrap the application with it */}
     <PostsProvider>{children}</PostsProvider>
   </FirebaseProvider>
