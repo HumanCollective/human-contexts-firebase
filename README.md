@@ -4,7 +4,7 @@ A set of simple helpers for accessing Firebase Firestore data in realtime using 
 
 This is a pattern we use frequently for quickly building prototypes, new features, and database connections at Human. It's great for prototyping and it doesn't introduce a lot of complicated boilerplate code.
 
-Creating a secure realtime connection with Firestore is simple. Let's say
+Creating a secure realtime connection with Firestore is simple.
 
 ```tsx
 // in /src/contexts/orders.tsx
