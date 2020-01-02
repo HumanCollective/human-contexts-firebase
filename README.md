@@ -56,14 +56,7 @@ Install this library and firebase.
 yarn add firebase @humancollective/human-contexts-firebase
 ```
 
-Initialize your firebase app at the top level of your application (e.g., in a `<Layout />` component).
-
-```tsx
-import firebase from 'firebase/app'
-firebase.initializeApp(YOUR_FIREBASE_CONFIG)
-```
-
-Wrap your application in the `<FirebaseProvider />` and give it your firebase app. You can nest this deeper in your application as long as it wraps all of the `human-contexts-firebase` providers.
+Wrap your application in the `<FirebaseProvider />` and give it your firebase app configuration. You can nest this deeper in your application as long as it wraps all of the `human-contexts-firebase` providers.
 
 ```tsx
 import React from 'react'
