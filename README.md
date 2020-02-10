@@ -7,7 +7,7 @@ This is a pattern we use frequently for quickly building prototypes, new feature
 Creating a secure realtime connection with Firestore is simple.
 
 ```tsx
-// in /src/contexts/orders.tsx
+// in /src/contexts/orders.ts
 import { authedCollection } from '@humancollective/human-contexts-firebase'
 import { Order } from '../types'
 
