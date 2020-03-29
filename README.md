@@ -1,5 +1,9 @@
 # `human-contexts-firebase`
 
+Built by [Human](https://humancollective.co).
+
+**Note: This project has been deprecated in favor of [`human-hooks-firebase`](https://www.npmjs.com/package/@humancollective/human-hooks-firebase) and [`human-hooks-firebase-native`](https://www.npmjs.com/package/@humancollective/human-hooks-firebase-native). Check out those projects if you haven't already.**
+
 A set of simple helpers for accessing Firebase Firestore data in realtime using React Contexts.
 
 This is a pattern we use frequently for quickly building prototypes, new features, and database connections at Human. It's great for prototyping and it doesn't introduce a lot of complicated boilerplate code.
